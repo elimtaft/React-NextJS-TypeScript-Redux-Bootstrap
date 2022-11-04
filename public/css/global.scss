@@ -1,0 +1,29 @@
+@import "~bootstrap/scss/bootstrap";
+
+html, body {
+  padding: 0;
+  margin: 0;
+  font-family: "Oxygen", sans-serif;
+  font-size: 16px;
+  line-height: 1.42857143;
+  color: #333333;
+  background-color: #ffffff;
+}
+
+a {
+  color: #4582ec;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+p.italic {
+  font-style: italic;
+}
+

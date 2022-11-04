@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+
+  strapi-backend:
+    volumes:
+      - '../.subtrees/strapi-backend/:/app/'
+    ports:
+      - 8000:8000
+
+  db-strapi:
+    ports:
+      - 5432:5432
+
+  nextjs-app:
+    command: "generate:migrate:dev"
+    ports:
+      - 3000:3000
+      - 5555:5555
+    volumes:
+      - '../:/app/'
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t

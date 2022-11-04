@@ -1,0 +1,79 @@
+server {
+  server_name ${NGINX_STRAPI_SERVER_NAME};
+  listen 80;
+
+  location ~ ^/.well-known/acme-challenge/ {
+    root /usr/share/nginx/html/;
+  }
+
+  location /_csp_response {
+    access_log off;
+    return 204;
+  }
+
+  location /_nel_response {
+    access_log off;
+    return 204;
+  }
+
+  # @begin-ssl
+  location / {
+    return 301 https://$host$request_uri;
+  }
+}
+
+server {
+  server_name www.${NGINX_STRAPI_SERVER_NAME};
+  listen 443 ssl http2;
+
+  resolver ${RESOLVER};
+
+  include /etc/nginx/snippets/general-security-header.conf;
+  etag off;
+
+  return 301 $scheme://${NGINX_STRAPI_SERVER_NAME}$request_uri;
+}
+
+server {
+  server_name ${NGINX_STRAPI_SERVER_NAME};
+  listen 443 ssl http2;
+  # @end-ssl
+
+  resolver ${RESOLVER};
+
+  set $strapi_backend http://${STRAPI_HOST};
+  set $csp_response http://${NGINX_STRAPI_SERVER_NAME}/_csp_response;
+  set $nel_response http://${NGINX_STRAPI_SERVER_NAME}/_nel_response;
+
+  include /etc/nginx/snippets/general-security-header.conf;
+
+  if ($http_host != ${NGINX_STRAPI_SERVER_NAME}) {
+    return 301 https://${NGINX_STRAPI_SERVER_NAME}$request_uri;
+  }
+
+  location ~ ^/robots.txt {
+    charset utf-8;
+    alias /robots-${ENVIRONMENT}.txt;
+  }
+
+  location = /_csp {
+    access_log /var/log/nginx/csp.log CSP;
+    proxy_pass $csp_response;
+  }
+
+  location = /_nel {
+    access_log /var/log/nginx/nel.log CSP;
+    proxy_pass $nel_response;
+  }
+
+  location ~ ^/* {
+    include /etc/nginx/snippets/general-security-header.conf;
+    add_header Cache-Control "no-cache";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_hide_header X-Powered-By;
+    proxy_pass $strapi_backend;
+  }
+}

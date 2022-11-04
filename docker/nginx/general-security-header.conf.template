@@ -1,0 +1,14 @@
+add_header X-Frame-Options "SAMEORIGIN" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-XSS-Protection "1; mode=block" always;
+add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; preload" always;
+add_header Referrer-Policy "no-referrer, strict-origin-when-cross-origin";
+add_header Permissions-Policy "geolocation=(), microphone=(), fullscreen=(self), payment=(), camera=()";
+add_header Cross-Origin-Embedder-Policy-Report-Only "credentialless";
+add_header Cross-Origin-Opener-Policy "same-origin";
+add_header Cross-Origin-Resource-Policy "cross-origin";
+add_header Report-To '{"group": "csp-reports","max_age":31536000,"endpoints":[{"url":"/_csp"}]}, {"group":"report-nel","max_age":31536000,"endpoints":[{"url":"/_nel"}],"include_subdomains":true}' always;
+add_header Reporting-Endpoints 'csp-reports="/_csp"';
+add_header Content-Security-Policy "default-src 'none'; base-uri 'none'; form-action 'none'; prefetch-src 'self' 'report-sample'; frame-ancestors 'none'; object-src 'none'; manifest-src 'self' 'report-sample'; media-src sampleproject.s3-us-west-2.amazonaws.com 'self'; connect-src 'self' * strapi.io analytics.strapi.io api.github.com/repos/strapi/strapi/releases/latest 'report-sample'; img-src 'self' * blob: data: sampleproject.s3-us-west-2.amazonaws.com 'report-sample'; script-src 'self' 'unsafe-eval' 'report-sample'; style-src 'self' 'unsafe-inline' 'report-sample'; font-src 'self' data: 'report-sample'; upgrade-insecure-requests; report-to csp-reports; report-uri /_csp" always;
+add_header NEL '{"report_to":"report-nel","max_age":31536000,"include_subdomains":true,"success_fraction":0.0,"failure_fraction":1.0}' always;
+more_clear_headers "Server";

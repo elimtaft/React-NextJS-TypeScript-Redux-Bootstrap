@@ -1,0 +1,11 @@
+# *
+# Disallow: / - disallow all pages
+# Allow: /$ - only allow main index page
+# all public facing pages should be explicitly allowed.
+User-agent: *
+Disallow: /
+Allow: /$
+
+
+# Sitemaps
+# Sitemap: https://TEMPLATE_PAGE/sitemap.xml

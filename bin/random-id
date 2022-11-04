@@ -1,0 +1,84 @@
+#! /usr/bin/env python3
+
+
+from __future__ import (print_function,)
+
+
+import argparse
+import base64
+import os
+import sys
+
+
+def _main(argv):
+    parser = argparse.ArgumentParser(
+        description='Generate base64url-encoded random identifiers.'
+        )
+    group_count = parser.add_mutually_exclusive_group()
+    group_count.add_argument(
+        '--bits',
+        type=int,
+        help='generate COUNT random bits (rounded up to a multiple of 8)',
+        metavar='COUNT',
+        dest='bits',
+        )
+    group_count.add_argument(
+        '--bytes',
+        type=int,
+        help='generate COUNT random bytes',
+        metavar='COUNT',
+        dest='bytes',
+        )
+    group_encoding = parser.add_mutually_exclusive_group()
+    group_encoding.add_argument(
+        '--base64',
+        action='store_const',
+        const=base64.standard_b64encode,
+        help='encode in `base64`',
+        dest='encoding',
+        )
+    group_encoding.add_argument(
+        '--base64url',
+        action='store_const',
+        const=base64.urlsafe_b64encode,
+        help='encode in `base64url` (default)',
+        dest='encoding',
+        )
+    group_encoding.add_argument(
+        '--base32',
+        action='store_const',
+        const=base64.b32encode,
+        help='encode in `base32`',
+        dest='encoding',
+        )
+    group_encoding.add_argument(
+        '--base16',
+        '--hex',
+        action='store_const',
+        const=base64.b16encode,
+        help='encode in `base16`',
+        dest='encoding',
+        )
+    parser.add_argument(
+        '-n',
+        action='store_false',
+        default=True,
+        help='do not print the trailing newline character',
+        dest='newline',
+        )
+    parser.set_defaults(bits=None, bytes=16, encoding=base64.urlsafe_b64encode)
+    arguments = parser.parse_args(argv[1:])
+    count = arguments.bytes if None is arguments.bits else (arguments.bits + 7) // 8
+    random_id = arguments.encoding(os.urandom(count)).decode('ASCII')
+    if arguments.newline:
+        print(random_id)
+    else:
+        print(random_id, end='')
+    return 0
+
+
+if '__main__' == __name__:
+    code = _main(sys.argv)
+    if None is code:
+        code = 0
+    sys.exit(code)

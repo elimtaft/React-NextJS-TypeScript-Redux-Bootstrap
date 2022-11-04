@@ -1,0 +1,26 @@
+.auth_box {
+  border: 1px solid #000;
+  border-radius: 4px;
+  min-width: 280px;
+  max-width: 400px;
+  padding: 15px;
+}
+
+input.red {
+  border: 1px solid red;
+}
+
+small.input_error {
+  color: red !important;
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}
+
+.auth_form input:focus {
+  border-color: #66afe9;
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
+}

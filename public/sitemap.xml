@@ -1,0 +1,25 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://TEMPLATE_PAGE</loc>
+    <lastmod>2022-08-16T14:05:54.956Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en-US" type="text/html" href="https://TEMPLATE_PAGE" />
+    <xhtml:link rel="alternate" hreflang="en" type="text/html" href="https://TEMPLATE_PAGE" />
+    <xhtml:link rel="alternate" hreflang="x-default" type="text/html" href="https://TEMPLATE_PAGE" />
+  </url>
+  <!--
+  All other public facing pages need an entry
+  <url>
+    <loc>https://TEMPLATE_PAGE/SUBPAGE</loc>
+    <lastmod>2022-08-16T14:05:54.956Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en-US" type="text/html" href="https://TEMPLATE_PAGE/SUBPAGE" />
+    <xhtml:link rel="alternate" hreflang="en" type="text/html" href="https://TEMPLATE_PAGE/SUBPAGE" />
+    <xhtml:link rel="alternate" hreflang="x-default" type="text/html" href="https://TEMPLATE_PAGE/SUBPAGE" />
+  </url>
+  ...
+  -->
+</urlset>
